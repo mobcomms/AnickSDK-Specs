@@ -18,7 +18,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/bytedance/AdsGlobalPackage", exact: "7.9.1-release.1"),
+        .package(url: "https://github.com/bytedance/AdsGlobalPackage", exact: "7.9.0-release.8"),
     ],
     targets: [
         .binaryTarget(
