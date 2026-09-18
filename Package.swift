@@ -23,13 +23,13 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "AnickSDKFramework",
-            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.13/AnickSDKFramework.xcframework.zip",
-            checksum: "7dabda693b5dd6f117efddc81aff7fab8c7ea56c6307fc9313745fbb2bad9075"
+            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.14/AnickSDKFramework.xcframework.zip",
+            checksum: "28f749d9088403d0b15032cb933bdd8e71acc6fbe7e384f4e55462ddb63a8bd3"
         ),
         .binaryTarget(
             name: "AnickSDKFrameworkBinary_Happypoint",
-            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.13/AnickSDKFramework_happypoint.xcframework.zip",
-            checksum: "741f186b632478dab856db53f0816f4e728afffc66072a99da05236cfcddd19a"
+            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.14/AnickSDKFramework_happypoint.xcframework.zip",
+            checksum: "64ad1ddf37909976b4941090df17f7c1e8e532afd4547c67f3d6a3926741c158"
         ),
         .target(
             name: "AnickSDKFramework_Happypoint",
