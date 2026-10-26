@@ -18,25 +18,26 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/bytedance/AdsGlobalPackage", exact: "8.1.0-release.9"),
+        .package(url: "https://github.com/bytedance/AdsGlobalPackage", exact: "8.2.1-release.2"),
     ],
     targets: [
         .binaryTarget(
             name: "AnickSDKFramework",
-            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.14/AnickSDKFramework.xcframework.zip",
-            checksum: "28f749d9088403d0b15032cb933bdd8e71acc6fbe7e384f4e55462ddb63a8bd3"
+            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.15-happypoint/AnickSDKFramework.xcframework.zip",
+            checksum: "987b6751b25fc177939e8a28c5c73a2935909e6836b271784afca876a95bac8c"
         ),
         .binaryTarget(
             name: "AnickSDKFrameworkBinary_Happypoint",
-            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.14/AnickSDKFramework_happypoint.xcframework.zip",
-            checksum: "64ad1ddf37909976b4941090df17f7c1e8e532afd4547c67f3d6a3926741c158"
+            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.0.15-happypoint/AnickSDKFramework_happypoint.xcframework.zip",
+            checksum: "bc821e06c5ea14607a2646649d5281a77dabbdf0d0bf7f60358747384078d6ca"
         ),
         .target(
             name: "AnickSDKFramework_Happypoint",
             dependencies: [
                 .target(name: "AnickSDKFrameworkBinary_Happypoint"),
                 .product(name: "AdsGlobalPackage", package: "AdsGlobalPackage"),
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
     ]
 )
