@@ -8,7 +8,7 @@ import PackageDescription
 let package = Package(
     name: "AnickSDK",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v13)
     ],
     products: [
         .library(name: "AnickSDKFramework_KGMobilians", targets: ["AnickSDKFramework_KGMobilians"]),
@@ -19,8 +19,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "AnickSDKFrameworkBinary_KGMobilians",
-            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.2.03-kgmobilians/AnickSDKFrameworkBinary_KGMobilians.xcframework.zip",
-            checksum: "841165438b863f80185adcaf8823da236a9923b868a2d6e53aed6b19b0e15efb"
+            url: "https://github.com/mobcomms/AnickSDK-Specs/releases/download/2.2.3-kgmobilians/AnickSDKFrameworkBinary_KGMobilians.xcframework.zip",
+            checksum: "c61830cc37b3051ef034b149b26724f54ee9ab86ae0163ea0e91f6c00e8c3682"
         ),
         // wrapper — static 바이너리 + 벤더 패키지 + SDK 리소스를 한 product 로 묶는다
         .target(
