@@ -1,0 +1,188 @@
+<!-- 네이티브 전면(INTERSTITIAL) 로딩 화면 — 노션 「전면 프레임 적용 스타일」의 기본(최초 로딩) 상태. reload 상태는 미적용.
+     lottie_light.min.js(lottie-web 5.12.2, MIT) · LottieLoadingData.js(이미지 base64 내장) 를 같은 번들 폴더에서 상대 경로로 읽는다.
+     닫기 버튼은 네이티브(AnickInterstitialCloseButton)가 헤더 오른쪽 자리에 겹쳐 그린다. Pretendard는 번들 폰트 파일을 @font-face로 직접 읽는다. -->
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Lottie Loading</title>
+    <style>
+      /* Pretendard — 같은 번들 폴더의 폰트 파일을 직접 읽는다 (폰트 미동봉 매체사는 시스템 폰트로 대체) */
+      @font-face {
+        font-family: "Pretendard";
+        font-weight: 500;
+        font-display: swap;
+        src: url("Pretendard-Medium.otf") format("opentype");
+      }
+
+      @font-face {
+        font-family: "Pretendard";
+        font-weight: 700 800;
+        font-display: swap;
+        src: url("Pretendard-Bold.otf") format("opentype");
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #ffffff;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      /* 전체 컨테이너 — 20 / 20 / 28 여백.
+         웹뷰가 이미 세이프에어리어 안쪽에 배치되므로 env(safe-area-inset-*)를 더하지 않는다 */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 20px 28px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      /* 상단: 로고(좌) · 닫기 버튼 자리(우, 네이티브 버튼이 겹침) */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        height: 32px;
+      }
+
+      .brand {
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+        color: #8100a7;
+        line-height: 1;
+      }
+
+      .closeSlot {
+        width: 32px;
+        height: 32px;
+      }
+
+      /* 본문: 화면 가운데 */
+      .body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 0;
+      }
+
+      .lottieWrap {
+        width: min(220px, 56vw);
+        height: min(220px, 56vw);
+        margin: 0 auto 20px;
+      }
+
+      .title {
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.03em;
+        color: #111827;
+        line-height: 1.35;
+      }
+
+      .subtitle {
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: -0.02em;
+        color: #9ca3af;
+        line-height: 1.4;
+      }
+
+      /* 하단: 상태 문구 */
+      .footer {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 4px;
+      }
+
+      .status {
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: -0.02em;
+        color: #9ca3af;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay">
+      <div class="header">
+        <span class="brand">anick</span>
+        <span class="closeSlot"></span>
+      </div>
+      <div class="body">
+        <div id="lottieLoader" class="lottieWrap"></div>
+        <p class="title">광고를 준비하고 있어요</p>
+        <p class="subtitle">잠시만 기다려주세요.</p>
+      </div>
+      <div class="footer">
+        <p class="status">광고 요청을 확인하고 있어요</p>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Lottie 로딩 애니메이션 재생 (loop, autoplay — 라이브러리·데이터 로드 실패 시 빈 영역 유지)
+       */
+      function playLottie() {
+        if (!window.lottie || !window.ANICK_LOADING_LOTTIE) return;
+        window.lottie.loadAnimation({
+          container: document.getElementById("lottieLoader"),
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: window.ANICK_LOADING_LOTTIE,
+        });
+      }
+
+      function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+      }
+
+      /**
+       * 문구·레이아웃을 먼저 그린 뒤 Lottie 라이브러리·데이터(약 2.4MB)를 불러온다.
+       * (동기 <script>로 두면 스크립트 실행이 끝날 때까지 첫 화면이 그려지지 않는다)
+       */
+      requestAnimationFrame(function () {
+        setTimeout(function () {
+          loadScript("lottie_light.min.js")
+            .then(function () { return loadScript("LottieLoadingData.js"); })
+            .then(playLottie)
+            .catch(function () {});
+        }, 0);
+      });
+    </script>
+  </body>
+</html>

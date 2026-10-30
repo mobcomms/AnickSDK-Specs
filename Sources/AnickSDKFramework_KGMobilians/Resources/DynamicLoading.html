@@ -1,0 +1,305 @@
+<!-- 네이티브 다이나믹 로딩페이지 HTML 파일 SDK 직접 삽입하여 사용 (adview_v3) -->
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Dynamic Loading</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        touch-action: manipulation;
+        -ms-content-zooming: none;
+        -ms-touch-action: manipulation;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: #ffffff;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .adLoading {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        background: #ffffff;
+        margin: 0;
+        text-align: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        gap: 0;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+
+      .adLoading_webview {
+        width: 300px;
+        height: 250px;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .loader {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        -webkit-animation: loader-circles 2s linear infinite;
+        animation: loader-circles 2s linear infinite;
+        margin: 0 auto;
+      }
+
+      .loadingTxt {
+        margin: 50px auto 7px;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: -0.055px;
+        color: var(--theme-color);
+      }
+
+      .loadingDesc {
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: -0.035px;
+        line-height: 16px;
+        color: var(--theme-color);
+        margin: 0 auto;
+      }
+
+      @keyframes loader-circles {
+        0% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.05),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.1),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.2),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.3),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.4),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.6),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.8),
+            -19px -19px 0 0 rgb(var(--theme-rgb));
+        }
+
+        12.5% {
+          box-shadow:
+            0 -27px 0 0 rgb(var(--theme-rgb)),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.05),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.1),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.2),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.3),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.4),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.6),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.8);
+        }
+
+        25% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.8),
+            19px -19px 0 0 rgb(var(--theme-rgb)),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.05),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.1),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.2),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.3),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.4),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.6);
+        }
+
+        37.5% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.6),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.8),
+            27px 0 0 0 rgb(var(--theme-rgb)),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.05),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.1),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.2),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.3),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.4);
+        }
+
+        50% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.4),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.6),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.8),
+            19px 19px 0 0 rgb(var(--theme-rgb)),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.05),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.1),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.2),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.3);
+        }
+
+        62.5% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.3),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.4),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.6),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.8),
+            0 27px 0 0 rgb(var(--theme-rgb)),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.05),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.1),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.2);
+        }
+
+        75% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.2),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.3),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.4),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.6),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.8),
+            -19px 19px 0 0 rgb(var(--theme-rgb)),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.05),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.1);
+        }
+
+        87.5% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.1),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.2),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.3),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.4),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.6),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.8),
+            -27px 0 0 0 rgb(var(--theme-rgb)),
+            -19px -19px 0 0 rgba(var(--theme-rgb), 0.05);
+        }
+
+        100% {
+          box-shadow:
+            0 -27px 0 0 rgba(var(--theme-rgb), 0.05),
+            19px -19px 0 0 rgba(var(--theme-rgb), 0.1),
+            27px 0 0 0 rgba(var(--theme-rgb), 0.2),
+            19px 19px 0 0 rgba(var(--theme-rgb), 0.3),
+            0 27px 0 0 rgba(var(--theme-rgb), 0.4),
+            -19px 19px 0 0 rgba(var(--theme-rgb), 0.6),
+            -27px 0 0 0 rgba(var(--theme-rgb), 0.8),
+            -19px -19px 0 0 rgb(var(--theme-rgb));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="adLoading" class="adLoading">
+      <div class="loader"></div>
+      <p class="loadingTxt">Loading...</p>
+      <p class="loadingDesc">
+        광고 클릭 후 바로 나가면 (5초 이내)
+        <br />
+        혜택이 지급되지 않을 수 있어요.
+      </p>
+    </div>
+
+    <script>
+      /**
+       * 고객사별 테마 컬러 정의
+       */
+      const THEME_COLORS = {
+        hanamoney: "#00928f",
+        paybooc: "#ec2d4e",
+        payco: "#fc2433",
+        lpoint: "#ff333c",
+        kakaopay: "#ffe500",
+        emart24: "#fa4b0d",
+        shinhancard: "#007aff",
+        kgmobilians: "#44217A",
+        lottecard: "#1D2571",
+        anick: "#8100a7",
+        cultureland: "#da4634",
+        culturelandplus: "#3a8af3",
+        happypoint: "#0d0f71",
+      };
+
+      /**
+       * 헥사 컬러를 RGB 문자열로 변환 (예: "129, 0, 167")
+       */
+      function convertHexToRgb(hex) {
+        if (!hex) return "";
+        const parsed = hex.replace("#", "");
+        const bigint = parseInt(parsed, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `${r}, ${g}, ${b}`;
+      }
+
+      /**
+       * URL 쿼리 파라미터 파싱
+       * 컬러 우선순위: loadingColor > THEME_COLORS[clientCode] > THEME_COLORS.anick
+       */
+      function getSearchParams() {
+        const searchParams = new URLSearchParams(window.location.search);
+        return {
+          clientCode: searchParams.get("clientCode")?.toLowerCase() || "",
+          loadingColor: searchParams.get("loadingColor")?.toUpperCase() || "",
+          platform: searchParams.get("platform")?.toUpperCase() || "",
+          isLoading: searchParams.get("isLoading") !== "false",
+        };
+      }
+
+      function normalizeLoadingColor(loadingColor) {
+        if (!loadingColor) return "";
+        const color = loadingColor.trim();
+        if (!color) return "";
+        return color.startsWith("#") ? color : `#${color}`;
+      }
+
+      function init() {
+        const { clientCode, loadingColor, platform, isLoading } =
+          getSearchParams();
+        const el = document.getElementById("adLoading");
+
+        const normalizedLoadingColor = normalizeLoadingColor(loadingColor);
+        const clientTheme =
+          normalizedLoadingColor ||
+          THEME_COLORS[clientCode] ||
+          THEME_COLORS.hanamoney;
+        const themeRgb = convertHexToRgb(clientTheme);
+
+        el.style.setProperty("--theme-color", clientTheme);
+        el.style.setProperty("--theme-rgb", themeRgb);
+
+        if (platform === "WEBVIEW") {
+          el.classList.add("adLoading_webview");
+        }
+
+        if (!isLoading) {
+          el.classList.add("hide");
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>
